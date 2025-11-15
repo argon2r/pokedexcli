@@ -6,9 +6,9 @@ import (
 	"net/http"
 )
 
-// GetPokemon
+// GetPokemon -
 func (c *Client) GetPokemon(pokemonName string) (Pokemon, error) {
-	url := baseURL + "/pokemon" + pokemonName
+	url := baseURL + "/pokemon/" + pokemonName
 
 	if val, ok := c.cache.Get(url); ok {
 		pokemonResp := Pokemon{}
@@ -23,6 +23,7 @@ func (c *Client) GetPokemon(pokemonName string) (Pokemon, error) {
 	if err != nil {
 		return Pokemon{}, err
 	}
+
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return Pokemon{}, err
@@ -41,5 +42,6 @@ func (c *Client) GetPokemon(pokemonName string) (Pokemon, error) {
 	}
 
 	c.cache.Add(url, dat)
+
 	return pokemonResp, nil
 }
